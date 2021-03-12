@@ -103,7 +103,7 @@ public class ShapeCollectorTestSuite {
             Exception exception = assertThrows(IndexOutOfBoundsException.class, () ->
                     shapeCollector.getFigure(1));
             //Then
-            assertEquals("wrong index", exception.getMessage());
+            assertEquals("wrong index or empty list", exception.getMessage());
         }
     }
 
@@ -120,7 +120,7 @@ public class ShapeCollectorTestSuite {
             shapeCollector.addFigure(circle, square, triangle);
             //When
             String result = shapeCollector.showFigures();
-            String expectedResult = "CIRCLE SQUARE TRIANGLE";
+            String expectedResult = "CIRCLESQUARETRIANGLE";
             //Then
             assertEquals(expectedResult, result);
         }
