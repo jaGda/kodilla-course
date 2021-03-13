@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -55,9 +56,9 @@ public class WeatherForecastTestSuite {
         int quantityOfSensors2 = weatherForecast2.calculateForecast().size();
 
         //Then
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(5, quantityOfSensors1),
-                () -> Assertions.assertEquals(6, quantityOfSensors2)
+        assertAll(
+                () -> assertEquals(5, quantityOfSensors1),
+                () -> assertEquals(6, quantityOfSensors2)
         );
     }
 
@@ -70,9 +71,9 @@ public class WeatherForecastTestSuite {
         double averageTemperature2 = weatherForecast2.calculateAverageTemperature();
 
         //Then
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(25.56, averageTemperature1),
-                () -> Assertions.assertEquals(11.25, averageTemperature2)
+        assertAll(
+                () -> assertEquals(25.56, averageTemperature1),
+                () -> assertEquals(11.25, averageTemperature2)
         );
     }
 
@@ -85,9 +86,9 @@ public class WeatherForecastTestSuite {
         double medianTemperature2 = weatherForecast2.calculateMedianOfTemperature();
 
         //Then
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(25.5, medianTemperature1),
-                () -> Assertions.assertEquals(8.5, medianTemperature2)
+        assertAll(
+                () -> assertEquals(25.5, medianTemperature1),
+                () -> assertEquals(8.5, medianTemperature2)
         );
     }
 }
