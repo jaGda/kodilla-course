@@ -40,7 +40,7 @@ public class WeatherForecastTestSuite {
     }};
 
     @BeforeAll
-    public static void beforeAllTests() {
+    static void beforeAllTests() {
         when(temperaturesMock1.getTemperatures()).thenReturn(temperaturesMap1);
         when(temperaturesMock2.getTemperatures()).thenReturn(temperaturesMap2);
         weatherForecast1 = new WeatherForecast(temperaturesMock1);
