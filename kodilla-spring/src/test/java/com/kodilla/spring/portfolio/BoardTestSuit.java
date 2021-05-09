@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -22,24 +21,12 @@ class BoardTestSuit {
         @Autowired
         Board board;
 
-        @Autowired
-        @Qualifier("ToDoList")
-        TaskList toDoList;
-
-        @Autowired
-        @Qualifier("InProgressList")
-        TaskList inProgressList;
-
-        @Autowired
-        @Qualifier("DoneList")
-        TaskList doneList;
-
         @Test
         void addTasksToToDoList() {
             //Given
             //When & Then
             assertAll(
-                    () -> assertTrue(toDoList.addTask("Read a book.")),
+                    () -> assertTrue(board.getToDoList().addTask("Read a book.")),
                     () -> assertEquals(1, board.displayToDoList())
             );
         }
@@ -49,7 +36,7 @@ class BoardTestSuit {
             //Given
             //When & Then
             assertAll(
-                    () -> assertTrue(inProgressList.addTask("PIT settlement.")),
+                    () -> assertTrue(board.getInProgressList().addTask("PIT settlement.")),
                     () -> assertEquals(1, board.displayInProgressList())
             );
         }
@@ -59,7 +46,7 @@ class BoardTestSuit {
             //Given
             //When & Then
             assertAll(
-                    () -> assertTrue(doneList.addTask("To sweep the floor.")),
+                    () -> assertTrue(board.getDoneList().addTask("To sweep the floor.")),
                     () -> assertEquals(1, board.displayDoneList())
             );
         }

@@ -31,4 +31,16 @@ public class Board {
         System.out.println();
         return doneList.getTasks().size();
     }
+
+    public TaskList getToDoList() {
+        return toDoList;
+    }
+
+    public TaskList getInProgressList() {
+        return inProgressList;
+    }
+
+    public TaskList getDoneList() {
+        return doneList;
+    }
 }
