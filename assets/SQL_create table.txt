@@ -1,0 +1,46 @@
+CREATE TABLE ISSUESLISTS
+(
+    ID   SERIAL PRIMARY KEY,
+    NAME VARCHAR(50)
+);
+
+CREATE TABLE ISSUES
+(
+    ID                 SERIAL PRIMARY KEY,
+    ISSUESLIST_ID      BIGINT UNSIGNED            NOT NULL,
+    SUMMARY            VARCHAR(100) CHARSET utf8  NOT NULL,
+    DEESCRIPTION       VARCHAR(1024) CHARSET utf8 NOT NULL,
+    USER_ID_ASSIGNEDTO BIGINT UNSIGNED            NOT NULL,
+    FOREIGN KEY (ISSUESLIST_ID) REFERENCES ISSUESLISTS (ID),
+    FOREIGN KEY (USER_ID_ASSIGNEDTO) REFERENCES USERS (ID)
+);
+
+INSERT INTO ISSUESLISTS(NAME)
+VALUES ('ToDo'),
+       ('In progress'),
+       ('Done');
+
+INSERT INTO ISSUES(ISSUESLIST_ID, SUMMARY, DEESCRIPTION, USER_ID_ASSIGNEDTO)
+VALUES (1, 'Shopping', 'Buy milk.', 1),
+       (1, 'Healthy', 'Go to the gym.', 2),
+       (1, 'Cleaning', 'To sweep the floor.', 3),
+       (1, 'Cleaning', 'To mop the floor.', 4),
+       (1, 'Cleaning', 'To dust the furniture.', 5),
+       (2, 'Relax', 'To read a book.', 1),
+       (2, 'Relax', 'Watch a movie.', 2),
+       (2, 'Healthy', 'Do exercises.', 3),
+       (2, 'Cleaning', 'Wash laundry.', 4),
+       (2, 'Cleaning', 'Wash a car.', 5),
+       (3, 'Responsibilities', 'Walk a dog.', 1),
+       (3, 'Responsibilities', 'Brush teeth.', 2),
+       (3, 'Responsibilities', 'Eat breakfast.', 3),
+       (3, 'Responsibilities', 'Dress up.', 4),
+       (3, 'Responsibilities', 'Charge phone.', 5);
+
+COMMIT;
+
+SELECT *
+FROM ISSUESLISTS;
+
+SELECT *
+FROM ISSUES;
