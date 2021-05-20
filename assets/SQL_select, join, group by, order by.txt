@@ -1,0 +1,21 @@
+/* ad.1 */
+SELECT issueslists.NAME, issues.SUMMARY, issues.DEESCRIPTION
+from issueslists
+         join issues on issueslists.ID = issues.ISSUESLIST_ID;
+/* ad.2 */
+SELECT users.FIRSTNAME, users.LASTNAME, issues.SUMMARY, issues.DEESCRIPTION
+from users
+         join issues on users.ID = issues.USER_ID_ASSIGNEDTO;
+/* ad.3 */
+SELECT users.FIRSTNAME, users.LASTNAME, COUNT(*) AS TASK_NUMBER
+from users
+         join issues on users.ID = issues.USER_ID_ASSIGNEDTO
+GROUP BY users.LASTNAME, users.FIRSTNAME
+ORDER BY users.LASTNAME, users.FIRSTNAME;
+
+/* ad.4 */
+SELECT users.LASTNAME, users.FIRSTNAME, issueslists.NAME, issues.SUMMARY, issues.DEESCRIPTION
+from issueslists
+         join issues on issueslists.ID = issues.ISSUESLIST_ID
+         join users on users.ID = issues.USER_ID_ASSIGNEDTO
+ORDER BY users.LASTNAME, users.FIRSTNAME;
