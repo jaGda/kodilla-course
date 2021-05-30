@@ -1,10 +1,12 @@
 package com.kodilla.hibernate.task.dao;
 
 import com.kodilla.hibernate.task.Task;
+import com.kodilla.hibernate.task.TaskFinancialDetails;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,16 +20,34 @@ class TaskDaoTestSuite {
     private TaskDao taskDao;
 
     @Test
+    void testTaskDaoSaveWithFinancialDetails() {
+        //Given
+        Task task = new Task(DESCRIPTION, 30);
+        task.setTaskFinancialDetails(new TaskFinancialDetails(new BigDecimal(120), false));
+
+        //When
+        taskDao.save(task);
+        int id = task.getId();
+
+        //Then
+        assertNotEquals(0, id);
+
+        //CleanUp
+        //taskDao.deleteById(id);
+
+    }
+
+    @Test
     void testTaskDaoSave() {
         //Given
         Task task = new Task(DESCRIPTION, 7);
 
         //When
         taskDao.save(task);
-
-        //Then
         int id = task.getId();
         Optional<Task> readTask = taskDao.findById(id);
+
+        //Then
         assertTrue(readTask.isPresent());
 
         //CleanUp
@@ -42,10 +62,10 @@ class TaskDaoTestSuite {
 
         //When
         taskDao.save(task);
-
-        //Then
         int duration = task.getDuration();
         List<Task> readTasks = taskDao.findByDuration(duration);
+
+        //Then
         assertEquals(4, readTasks.size());
 
         //CleanUp
