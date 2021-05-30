@@ -7,6 +7,10 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQuery(
+        name = "Employee.retrieveEmployeesWithMatchingLastName",
+        query = "from Employee where LOWER(lastName)  = LOWER(:LASTNAME)"
+)
 @Entity
 @Table(name = "EMPLOYEE")
 public class Employee {

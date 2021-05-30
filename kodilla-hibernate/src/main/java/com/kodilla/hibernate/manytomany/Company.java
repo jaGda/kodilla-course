@@ -6,6 +6,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedNativeQuery(
+        name = "Company.retrieveCompanyNameStartWith",
+        query = "SELECT * FROM COMPANY " +
+                "WHERE UPPER(LEFT(COMPANY_NAME,3)) = UPPER(:COMPANY) ",
+        resultClass = Company.class
+)
 @Entity
 @Table(name = "COMPANY")
 public class Company {

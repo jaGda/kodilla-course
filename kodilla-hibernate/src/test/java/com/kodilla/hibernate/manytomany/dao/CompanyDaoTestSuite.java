@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -13,6 +15,51 @@ class CompanyDaoTestSuite {
 
     @Autowired
     private CompanyDao companyDao;
+
+    @Autowired
+    private EmployeeDao employeeDao;
+
+    @Test
+    void testNamedQueries() {
+        //Given
+        Employee janKowalski = new Employee("Jan", "Kowalski");
+        Employee marekKowalski = new Employee("Marek", "Kowalski");
+        Employee janNowak = new Employee("Jan", "Nowak");
+
+        Company abcPoland = new Company("ABC Poland");
+        Company abcNorway = new Company("ABC Norway");
+        Company apple = new Company("Apple");
+
+        abcPoland.getEmployees().add(janKowalski);
+        abcNorway.getEmployees().add(marekKowalski);
+        apple.getEmployees().add(janNowak);
+
+        janKowalski.getCompanies().add(abcPoland);
+        marekKowalski.getCompanies().add(abcNorway);
+        janNowak.getCompanies().add(apple);
+
+        //When
+        companyDao.save(abcPoland);
+        int abcPolandId = abcPoland.getId();
+        companyDao.save(abcNorway);
+        int abcNorwayId = abcNorway.getId();
+        companyDao.save(apple);
+        int appleId = apple.getId();
+
+        List<Employee> employees = employeeDao.retrieveEmployeesWithMatchingLastName("kowALskI");
+        List<Company> companies = companyDao.retrieveCompanyNameStartWith("aBc");
+
+        //Then
+        try {
+            assertEquals(2, employees.size());
+            assertEquals(2, companies.size());
+        } finally {
+            //CleanUp
+            companyDao.deleteById(abcPolandId);
+            companyDao.deleteById(abcNorwayId);
+            companyDao.deleteById(appleId);
+        }
+    }
 
     @Test
     void testSaveManyToMany() {
@@ -51,12 +98,12 @@ class CompanyDaoTestSuite {
         assertNotEquals(0, greyMatterId);
 
         //CleanUp
-//        try {
-//            companyDao.deleteById(softwareMachineId);
-//            companyDao.deleteById(dataMastersId);
-//            companyDao.deleteById(greyMatterId);
-//        } catch (Exception e) {
-//            // do nothing
-//        }
+        try {
+            companyDao.deleteById(softwareMachineId);
+            companyDao.deleteById(dataMastersId);
+            companyDao.deleteById(greyMatterId);
+        } catch (Exception e) {
+            // do nothing
+        }
     }
 }
