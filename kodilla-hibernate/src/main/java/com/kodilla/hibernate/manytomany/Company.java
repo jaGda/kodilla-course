@@ -6,12 +6,21 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedNativeQuery(
-        name = "Company.retrieveCompanyNameStartWith",
-        query = "SELECT * FROM COMPANY " +
-                "WHERE UPPER(LEFT(COMPANY_NAME,3)) = UPPER(:COMPANY) ",
-        resultClass = Company.class
-)
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "Company.retrieveCompanyNameStartWith",
+                query = "SELECT * FROM COMPANY " +
+                        "WHERE UPPER(LEFT(COMPANY_NAME,3)) = UPPER(:COMPANY) ",
+                resultClass = Company.class
+        ),
+        @NamedNativeQuery(
+                name = "Company.retrieveCompanyViaAnyTextFragment",
+                query = "SELECT * FROM COMPANY " +
+                        "WHERE UPPER(COMPANY_NAME) LIKE UPPER(:ARG)",
+                resultClass = Company.class
+        )
+})
+
 @Entity
 @Table(name = "COMPANY")
 public class Company {
@@ -37,7 +46,7 @@ public class Company {
 
     @NotNull
     @Column(name = "COMPANY_NAME")
-    private String getCompanyName() {
+    public String getCompanyName() {
         return companyName;
     }
 
@@ -57,4 +66,5 @@ public class Company {
     private void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
 }

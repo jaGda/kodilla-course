@@ -7,10 +7,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedQuery(
-        name = "Employee.retrieveEmployeesWithMatchingLastName",
-        query = "from Employee where LOWER(lastName)  = LOWER(:LASTNAME)"
-)
+@NamedQueries({
+        @NamedQuery(
+                name = "Employee.retrieveEmployeesWithMatchingLastName",
+                query = "from Employee where LOWER(lastName)  = LOWER(:LASTNAME)"
+        ),
+        @NamedQuery(
+                name = "Employee.retrieveEmployeesViaAnyTextFragment",
+                query = "from Employee where UPPER(lastName) LIKE UPPER(:ARG)"
+        )
+})
+
 @Entity
 @Table(name = "EMPLOYEE")
 public class Employee {
