@@ -1,9 +1,9 @@
 package com.kodilla.patterns2.observer.forum;
 
-public interface Observable {
-    void registerObserver(Observer observer);
+public interface Observable<T> {
+    void registerObserver(Observer<T> observer);
 
     void notifyObservers();
 
-    void removeObserver(Observer observer);
+    void removeObserver(Observer<T> observer);
 }

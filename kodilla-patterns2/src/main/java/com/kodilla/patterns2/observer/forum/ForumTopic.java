@@ -3,9 +3,9 @@ package com.kodilla.patterns2.observer.forum;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForumTopic implements Observable {
+public class ForumTopic implements Observable<ForumTopic> {
 
-    private final List<Observer> observers;
+    private final List<Observer<ForumTopic>> observers;
     private final List<String> messages;
     private final String name;
 
@@ -29,19 +29,19 @@ public class ForumTopic implements Observable {
     }
 
     @Override
-    public void registerObserver(Observer observer) {
+    public void registerObserver(Observer<ForumTopic> observer) {
         observers.add(observer);
     }
 
     @Override
     public void notifyObservers() {
-        for (Observer observer : observers) {
+        for (Observer<ForumTopic> observer : observers) {
             observer.update(this);
         }
     }
 
     @Override
-    public void removeObserver(Observer observer) {
+    public void removeObserver(Observer<ForumTopic> observer) {
         observers.remove(observer);
     }
 }
